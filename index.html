@@ -1,0 +1,1116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Vending — AI Smart Vending Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #04080F;
+      --bg2: #080E1A;
+      --card: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --cyan: #00C8FF;
+      --cyan-dim: rgba(0,200,255,0.12);
+      --purple: #8B5CF6;
+      --purple-dim: rgba(139,92,246,0.12);
+      --green: #10B981;
+      --text: #F1F5F9;
+      --muted: #94A3B8;
+      --subtle: #334155;
+      --font: 'Inter', sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ===== UTILITIES ===== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--cyan);
+      background: var(--cyan-dim); border: 1px solid rgba(0,200,255,0.2);
+      padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .tag::before { content: ''; width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; display: inline-block; }
+
+    h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      color: #fff; font-weight: 600; font-size: 15px;
+      padding: 14px 28px; border-radius: 10px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--text);
+      font-weight: 600; font-size: 15px;
+      padding: 13px 27px; border-radius: 10px;
+      text-decoration: none;
+      border: 1px solid var(--card-border);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--cyan); background: var(--cyan-dim); }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 0;
+      background: rgba(4,8,15,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
+      transition: all 0.3s;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text);
+    }
+    .logo-icon {
+      width: 38px; height: 38px;
+    }
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
+    }
+    .logo-text span { color: var(--cyan); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta { font-size: 14px; padding: 10px 22px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 160px 0 100px;
+      position: relative; overflow: hidden;
+      min-height: 100vh;
+      display: flex; align-items: center;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,200,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 20% 70%, rgba(139,92,246,0.07) 0%, transparent 60%);
+    }
+
+    /* Animated grid */
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center; position: relative; z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--cyan);
+      background: var(--cyan-dim); border: 1px solid rgba(0,200,255,0.25);
+      padding: 6px 16px; border-radius: 100px; margin-bottom: 24px;
+    }
+    .hero-eyebrow .pulse {
+      width: 7px; height: 7px; background: var(--cyan);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--muted);
+      line-height: 1.7; margin-bottom: 40px;
+      max-width: 500px;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .hero-visual {
+      position: relative;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    .machine-glow {
+      position: absolute;
+      width: 300px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(0,200,255,0.15) 0%, transparent 70%);
+      filter: blur(40px);
+    }
+
+    .machine-carousel {
+      position: relative; z-index: 1;
+      height: 520px;
+      width: 100%;
+      max-width: 420px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      filter: drop-shadow(0 30px 60px rgba(0,200,255,0.2));
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+    }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 3;
+    }
+
+    .carousel-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: none; cursor: pointer;
+      padding: 0;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .carousel-dot.active {
+      background: var(--cyan);
+      transform: scale(1.4);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* Floating badges on machine */
+    .hero-badge {
+      position: absolute; z-index: 2;
+      background: rgba(8,14,26,0.9);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      border-radius: 12px; padding: 12px 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-badge-icon { font-size: 1.4rem; }
+    .hero-badge strong { display: block; font-size: 14px; font-weight: 700; color: var(--text); }
+    .hero-badge span { font-size: 12px; color: var(--muted); }
+
+    .badge-top { top: 60px; left: -20px; animation: floatBadge1 5s ease-in-out infinite; }
+    .badge-bot { bottom: 80px; right: -20px; animation: floatBadge2 5s ease-in-out 1s infinite; }
+
+    @keyframes floatBadge1 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes floatBadge2 {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--card);
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+      padding: 40px 0;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 0 24px;
+      border-right: 1px solid var(--card-border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.6rem; font-weight: 700;
+      color: var(--cyan); display: block;
+      line-height: 1;
+    }
+    .stat-label { font-size: 14px; color: var(--muted); margin-top: 6px; }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works { padding: 120px 0; }
+    .section-header { margin-bottom: 70px; }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 32px; position: relative;
+    }
+
+    /* Connector line */
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 40px; left: calc(16.67% + 20px); right: calc(16.67% + 20px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--cyan));
+      z-index: 0;
+    }
+
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 40px 32px;
+      position: relative; z-index: 1;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .step-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+
+    .step-num {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 700; color: #fff;
+      margin-bottom: 24px;
+    }
+    .step-card h3 {
+      font-size: 1.2rem; font-weight: 700;
+      margin-bottom: 12px; color: var(--text);
+    }
+    .step-card p { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+    /* ===== FEATURES ===== */
+    .features { padding: 0 0 120px; }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 32px;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .feature-card:hover {
+      border-color: var(--cyan);
+      background: rgba(0,200,255,0.04);
+    }
+    .feature-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .icon-cyan { background: var(--cyan-dim); }
+    .icon-purple { background: var(--purple-dim); }
+    .icon-green { background: rgba(16,185,129,0.12); }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ===== MACHINES ===== */
+    .machines { padding: 0 0 120px; }
+    .machines-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; margin-bottom: 50px;
+    }
+    .machines-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .machine-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .machine-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .machine-card:hover { border-color: rgba(0,200,255,0.3); transform: translateY(-6px); }
+    .machine-card:hover::after { opacity: 1; }
+
+    .machine-thumb {
+      width: 300px; height: 380px;
+      object-fit: contain;
+      margin: 0 auto 20px;
+      filter: drop-shadow(0 10px 30px rgba(0,200,255,0.15));
+      transition: transform 0.3s;
+    }
+    .machine-card:hover .machine-thumb { transform: scale(1.05); }
+
+    .machine-card h3 {
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--text); margin-bottom: 8px;
+    }
+    .machine-capacity {
+      font-size: 13px; color: var(--cyan);
+      font-weight: 600; margin-bottom: 16px;
+    }
+    .machine-tags {
+      display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+    }
+    .machine-tag {
+      font-size: 11px; font-weight: 500; color: var(--muted);
+      background: rgba(255,255,255,0.05); border: 1px solid var(--card-border);
+      padding: 4px 10px; border-radius: 100px;
+    }
+
+    /* ===== LOCATIONS ===== */
+    .locations { padding: 0 0 120px; }
+    .locations-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-top: 50px;
+    }
+    .location-card {
+      position: relative; border-radius: 20px; overflow: hidden;
+      height: 280px;
+    }
+    .location-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .location-card:hover img { transform: scale(1.05); }
+    .location-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(4,8,15,0.85) 0%, rgba(4,8,15,0.1) 60%);
+    }
+    .location-label {
+      position: absolute; bottom: 24px; left: 24px;
+    }
+    .location-label h3 { font-size: 1.2rem; font-weight: 700; color: #fff; }
+    .location-label p { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+    .location-card-wide { grid-column: span 2; height: 340px; }
+
+    /* ===== WHY VENDIQ ===== */
+    .why { padding: 0 0 120px; }
+    .why-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .why-visual {
+      position: relative;
+    }
+    .why-img {
+      width: 100%; border-radius: 20px;
+      border: 1px solid var(--card-border);
+      object-fit: cover;
+      max-height: 480px;
+    }
+    .why-stat-pill {
+      position: absolute; bottom: -20px; right: -20px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      border-radius: 16px; padding: 20px 26px;
+      text-align: center;
+    }
+    .why-stat-pill strong { display: block; font-size: 2rem; font-weight: 800; color: #fff; }
+    .why-stat-pill span { font-size: 13px; color: rgba(255,255,255,0.8); }
+
+    .why-list { list-style: none; margin-top: 32px; }
+    .why-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .why-item:last-child { border-bottom: none; }
+    .why-check {
+      width: 28px; height: 28px; flex-shrink: 0;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0,200,255,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--cyan); font-size: 13px; margin-top: 2px;
+    }
+    .why-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .why-item p { font-size: 14px; color: var(--muted); }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      padding: 0 0 120px;
+    }
+    .cta-inner {
+      background: linear-gradient(135deg, rgba(0,200,255,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(0,200,255,0.2);
+      border-radius: 28px;
+      padding: 80px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%; transform: translateX(-50%);
+      width: 400px; height: 300px;
+      background: radial-gradient(ellipse at center, rgba(0,200,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; margin-bottom: 16px;
+    }
+    .cta-inner p { font-size: 1.1rem; color: var(--muted); margin-bottom: 40px; }
+
+    .cta-form {
+      display: flex; gap: 12px; max-width: 480px;
+      margin: 0 auto;
+    }
+    .cta-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--card-border);
+      color: var(--text); font-size: 15px; font-family: var(--font);
+      padding: 14px 18px; border-radius: 10px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .cta-form input::placeholder { color: var(--muted); }
+    .cta-form input:focus { border-color: var(--cyan); }
+
+    .cta-trust {
+      margin-top: 24px; font-size: 13px; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+    }
+    .cta-trust span { display: flex; align-items: center; gap: 5px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 60px 0 32px;
+    }
+    .footer-inner {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 56px;
+    }
+    .footer-brand p {
+      font-size: 14px; color: var(--muted); margin-top: 16px;
+      line-height: 1.7; max-width: 280px;
+    }
+    .footer-col h4 {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a {
+      font-size: 14px; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--cyan); }
+
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 32px; border-top: 1px solid var(--card-border);
+    }
+    .footer-bottom p { font-size: 13px; color: var(--muted); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-visual { display: none; }
+      .hero-sub, .hero-actions { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .machines-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-inner { grid-template-columns: 1fr; }
+      .why-visual { display: none; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .stat-item { border-right: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .machines-grid { grid-template-columns: 1fr; }
+      .locations-grid { grid-template-columns: 1fr; }
+      .location-card-wide { grid-column: span 1; }
+      .cta-inner { padding: 48px 24px; }
+      .cta-form { flex-direction: column; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .machines-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav>
+    <div class="container nav-inner">
+      <!-- Logo SVG -->
+      <a href="#" class="logo">
+        <svg width="220" height="42" viewBox="0 0 280 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="4" width="116" height="44" rx="22" fill="url(#gNavLogo)"/>
+          <text x="58" y="32" font-family="Outfit, Inter, sans-serif" font-weight="900" font-size="22" fill="#0d1b3e" text-anchor="middle" letter-spacing="-0.5">SMART</text>
+          <text x="126" y="32" font-family="Outfit, Inter, sans-serif" font-weight="400" font-size="22" fill="#ffffff" letter-spacing="1">VENDING</text>
+          <defs>
+            <linearGradient id="gNavLogo" x1="0" y1="0" x2="116" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00c9a7"/>
+              <stop offset="1" stop-color="#00d9f5"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#machines">Machines</a></li>
+        <li><a href="#locations">Locations</a></li>
+        <li><a href="#why">Why Us</a></li>
+      </ul>
+
+      <a href="#get-started" class="btn-primary nav-cta">Get a Free Machine â†’</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="pulse"></span>
+            Free for Your Business â€” We Handle Everything
+          </div>
+          <h1>Premium AI Smart Vending.<br /><span class="gradient-text">Zero Cost to You.</span></h1>
+          <p class="hero-sub">
+            We place, own, and stock AI-powered vending machines at your location, completely free. Swipe or tap, credit or debit, Apple Pay or Google Pay â€” open the door and take as many items as you like. Your employees and visitors get 24/7 access to fresh drinks and snacks. You get the perk without the hassle.
+          </p>
+          <div class="hero-actions">
+            <a href="#get-started" class="btn-primary">Get a Machine at Your Location â†’</a>
+            <a href="#how-it-works" class="btn-outline">See How It Works</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="machine-glow"></div>
+          <div class="machine-carousel">
+            <img class="carousel-slide active"
+              src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/542-å€™æœºåŽ…-scaled-e1778492918264.jpg"
+              alt="VendIQ AI Smart Vending Machine" />
+            <img class="carousel-slide"
+              src="https://mkt-ai.hahavending.com/wp-content/uploads/2026/04/360-8.jpg"
+              alt="VendIQ AI Smart Vending Machine in Medical Center" />
+            <img class="carousel-slide"
+              src="https://mkt-us.hahavending.com/wp-content/uploads/2026/01/2-ç‚¹ä½å›¾å¥èº«æˆ¿1-e1773301415928.jpg"
+              alt="VendIQ AI Smart Vending Machine in Gym" />
+            <div class="carousel-dots">
+              <button class="carousel-dot active" aria-label="Slide 1"></button>
+              <button class="carousel-dot" aria-label="Slide 2"></button>
+              <button class="carousel-dot" aria-label="Slide 3"></button>
+            </div>
+          </div>
+          <div class="hero-badge badge-top">
+            <span class="hero-badge-icon">ðŸŽ</span>
+            <div>
+              <strong>Free to Your Business</strong>
+              <span>No cost, no contract</span>
+            </div>
+          </div>
+          <div class="hero-badge badge-bot">
+            <span class="hero-badge-icon">ðŸ”§</span>
+            <div>
+              <strong>We Handle Everything</strong>
+              <span>Stock, service &amp; support</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS BAR ===== -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-num stat-fixed">$0.00</span>
+          <p class="stat-label">Cost to Your Business</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">48hr</span>
+          <p class="stat-label">Average Installation Time</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">99.9%</span>
+          <p class="stat-label">Machine Uptime Guaranteed</p>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num stat-fixed">24/7</span>
+          <p class="stat-label">Snacks &amp; Drinks Available</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">How It Works</div>
+        <h2 class="section-title">Up and running<br />in three simple steps</h2>
+        <p class="section-sub">From your first conversation to a fully stocked machine at your door â€” we take care of everything.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3>Tell Us About Your Space</h3>
+          <p>Fill out a quick form or give us a call. We'll learn about your location, foot traffic, and the needs of your team or visitors â€” no commitment required.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3>We Install &amp; Stock Everything</h3>
+          <p>Our technicians deliver, install, and fully stock the machine with a curated selection of drinks and snacks. You don't lift a finger â€” we handle setup completely.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3>Your Team Enjoys. We Manage.</h3>
+          <p>We monitor inventory remotely, restock on schedule, and keep the machine running at peak condition. You get a premium perk for your people â€” with zero ongoing effort.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">What You Get</div>
+        <h2 class="section-title">A world-class vending experience.<br />Zero effort on your end.</h2>
+        <p class="section-sub">Our machines run on enterprise-grade AI so your employees and visitors get a seamless, modern snacking experience every time.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon icon-cyan">ðŸŽ</div>
+          <h3>Completely Free to Host</h3>
+          <p>No upfront cost, no monthly fees, no maintenance charges â€” ever. We place and operate the machine at your location entirely at our expense.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon icon-purple">ðŸ”§</div>
+          <h3>We Own, Stock &amp; Service It</h3>
+          <p>The machine is ours. We handle every restock, every repair, and every service call. Your team never touches it â€” we keep it full and running.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon icon-green">ðŸ’³</div>
+          <h3>Cashless &amp; Contactless Payments</h3>
+          <p>Cards, Apple Pay, Google Pay â€” your people check out in under 2 seconds. No cash needed, no awkward coins, just a fast and modern experience.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon icon-cyan">ðŸ§ </div>
+          <h3>AI-Powered, Jam-Free Technology</h3>
+          <p>Our machines use computer vision with 99.9% product accuracy â€” no mechanical jams, no wrong charges, no frustrated employees filing complaints.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon icon-purple">ðŸ›’</div>
+          <h3>Shop Like a Mini Convenience Store</h3>
+          <p>Employees can grab multiple drinks and snacks in a single visit â€” just like shopping at a store. Open the door, pick what you want, and go.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MACHINES ===== -->
+  <section class="machines" id="machines">
+    <div class="container">
+      <div class="machines-header">
+        <div>
+          <div class="tag">Our Fleet</div>
+          <h2 class="section-title">Six machine sizes.<br />One perfect fit.</h2>
+        </div>
+        <p class="section-sub" style="text-align:right;">We match the right machine to your space and foot traffic â€” from a cozy break room to a busy airport terminal.</p>
+      </div>
+      <div class="machines-grid">
+        <div class="machine-card">
+          <img class="machine-thumb"
+            src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/360æ­£é¢-300x300.jpg"
+            alt="Smart Mini Vending Machine" />
+          <h3>Smart Mini</h3>
+          <div class="machine-tags">
+            <span class="machine-tag">Small office</span>
+            <span class="machine-tag">Break room</span>
+            <span class="machine-tag">6 shelves</span>
+          </div>
+        </div>
+        <div class="machine-card">
+          <img class="machine-thumb"
+            src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/440æ­£é¢-300x300.jpg"
+            alt="Smart Plus Vending Machine" />
+          <h3>Smart Plus</h3>
+          <div class="machine-tags">
+            <span class="machine-tag">Medium traffic</span>
+            <span class="machine-tag">Hospital</span>
+            <span class="machine-tag">Airport</span>
+          </div>
+        </div>
+        <div class="machine-card">
+          <img class="machine-thumb"
+            src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/542æ­£é¢-300x300.jpg"
+            alt="Smart Pro Vending Machine" />
+          <h3>Smart Pro</h3>
+          <div class="machine-tags">
+            <span class="machine-tag">High traffic</span>
+            <span class="machine-tag">Combo unit</span>
+            <span class="machine-tag">Best seller</span>
+          </div>
+        </div>
+        <div class="machine-card">
+          <img class="machine-thumb"
+            src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/550æ­£-300x300.jpg"
+            alt="Smart Freezer Vending Machine" />
+          <h3>Smart Freezer</h3>
+          <div class="machine-tags">
+            <span class="machine-tag">Cold items</span>
+            <span class="machine-tag">Ice cream</span>
+            <span class="machine-tag">Frozen</span>
+          </div>
+        </div>
+        <div class="machine-card">
+          <img class="machine-thumb"
+            src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/620ä¾§é¢-300x300.jpg"
+            alt="Smart Max Vending Machine" />
+          <h3>Smart Max</h3>
+          <div class="machine-tags">
+            <span class="machine-tag">Large venue</span>
+            <span class="machine-tag">Campus</span>
+            <span class="machine-tag">High volume</span>
+          </div>
+        </div>
+        <div class="machine-card">
+          <img class="machine-thumb"
+            src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/1200æ­£é¢-300x300.jpg"
+            alt="Smart Ultra Vending Machine" />
+          <h3>Smart Ultra</h3>
+          <div class="machine-tags">
+            <span class="machine-tag">Mega venue</span>
+            <span class="machine-tag">Airport terminal</span>
+            <span class="machine-tag">12 shelves</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LOCATIONS ===== -->
+  <section class="locations" id="locations">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag">Where We Serve</div>
+        <h2 class="section-title">Any business. Any size.<br />Any industry.</h2>
+        <p class="section-sub">From corporate headquarters to healthcare facilities, we bring premium AI smart vending to the locations where people need it most.</p>
+      </div>
+      <div class="locations-grid">
+        <div class="location-card location-card-wide">
+          <img src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/542-å€™æœºåŽ…-scaled-e1778492918264.jpg" alt="Airport terminal vending machine" />
+          <div class="location-overlay"></div>
+          <div class="location-label">
+            <h3>Airports &amp; Transit Hubs</h3>
+            <p>Give travelers and staff instant access to drinks and snacks around the clock</p>
+          </div>
+        </div>
+        <div class="location-card">
+          <img src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/440-åŒ»é™¢-e1778492873352.jpg" alt="Hospital vending machine" />
+          <div class="location-overlay"></div>
+          <div class="location-label">
+            <h3>Hospitals &amp; Clinics</h3>
+            <p>Support your staff and visitors with convenient, always-available refreshments</p>
+          </div>
+        </div>
+        <div class="location-card">
+          <img src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/440-å¤§åŽ…-e1778492731806.jpg" alt="Office lobby vending machine" />
+          <div class="location-overlay"></div>
+          <div class="location-label">
+            <h3>Corporate Offices &amp; Lobbies</h3>
+            <p>A valued employee perk that keeps your team energized without leaving the building</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY VENDIQ ===== -->
+  <section class="why" id="why">
+    <div class="container">
+      <div class="why-inner">
+        <div class="why-visual">
+          <img
+            class="why-img"
+            src="https://mkt-us.hahavending.com/wp-content/uploads/2026/05/542-åŒ»é™¢1-scaled-e1778492957360.jpg"
+            alt="VendIQ machine in action"
+          />
+          <div class="why-stat-pill">
+            <strong>100%</strong>
+            <span>Managed by us.<br />Zero work for you.</span>
+          </div>
+        </div>
+
+        <div class="why-content">
+          <div class="tag">Why VendIQ</div>
+          <h2 class="section-title">The vending benefit your<br />team actually deserves</h2>
+          <p style="color:var(--muted);font-size:15px;line-height:1.7;">Traditional vending machines are old, unreliable, and always someone else's problem. VendIQ is different â€” modern AI technology, fully managed by us, at no cost to you.</p>
+
+          <ul class="why-list">
+            <li class="why-item">
+              <div class="why-check">âœ“</div>
+              <div>
+                <h4>No Cost. Ever.</h4>
+                <p>There are no fees, no contracts, and no maintenance bills. We invest in the machine and take on all operating costs â€” you simply host us.</p>
+              </div>
+            </li>
+            <li class="why-item">
+              <div class="why-check">âœ“</div>
+              <div>
+                <h4>Always Fresh, Always Stocked</h4>
+                <p>We monitor inventory remotely using AI and restock proactively â€” so your machine is never empty when your team needs it most.</p>
+              </div>
+            </li>
+            <li class="why-item">
+              <div class="why-check">âœ“</div>
+              <div>
+                <h4>No Jams. No Complaints.</h4>
+                <p>Our AI-powered machines eliminate mechanical failures entirely â€” no stuck products, no wrong charges, no unhappy employees chasing refunds.</p>
+              </div>
+            </li>
+            <li class="why-item">
+              <div class="why-check">âœ“</div>
+              <div>
+                <h4>Fast, Responsive Service Team</h4>
+                <p>If anything ever needs attention, our team responds quickly. You'll never be left with a broken machine and no one to call.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section" id="get-started">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="tag" style="margin:0 auto 20px;">It's Completely Free</div>
+        <h2>Ready to give your team<br /><span class="gradient-text">a premium AI smart vending experience?</span></h2>
+        <p>Drop your email and we'll reach out within 24 hours to discuss your space, choose the right machine size, and schedule your free installation.</p>
+        <form class="cta-form" onsubmit="handleSubmit(event)">
+          <input type="email" placeholder="Enter your work email" required />
+          <button type="submit" class="btn-primary">Request Your Free Machine â†’</button>
+        </form>
+        <div class="cta-trust">
+          <span>âœ“ No cost to your business</span>
+          <span>âœ“ Free site assessment</span>
+          <span>âœ“ Response within 24 hrs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="#" class="logo" style="margin-bottom:0;">
+            <svg class="logo-icon" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="38" height="38" rx="10" fill="url(#logo-grad2)"/>
+              <path d="M10 10L19 27L28 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="19" cy="14" r="2.5" fill="#00C8FF"/>
+              <line x1="10" y1="10" x2="7" y2="10" stroke="rgba(0,200,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="7" y1="10" x2="7" y2="7" stroke="rgba(0,200,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="28" y1="10" x2="31" y2="10" stroke="rgba(139,92,246,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="31" y1="10" x2="31" y2="7" stroke="rgba(139,92,246,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="logo-grad2" x1="0" y1="0" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#00C8FF" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.2"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span class="logo-text">Vend<span>IQ</span></span>
+          </a>
+          <p>We place, stock, and service AI-powered vending machines at your business â€” completely free. Your team gets 24/7 snacks and drinks. You get zero hassle.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#machines">Machine Models</a></li>
+            <li><a href="#locations">Locations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Service Requests</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Â© 2026 VendIQ. All rights reserved.</p>
+        <p style="color:var(--subtle)">AI Smart Vending Solutions</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth nav background on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.style.background = 'rgba(4,8,15,0.97)';
+      } else {
+        nav.style.background = 'rgba(4,8,15,0.85)';
+      }
+    });
+
+    // Email form handler
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      const input = e.target.querySelector('input');
+      btn.textContent = 'âœ“ We\'ll be in touch!';
+      btn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+      input.value = '';
+      input.disabled = true;
+      btn.disabled = true;
+    }
+
+    // Animate stats on scroll
+    const counters = document.querySelectorAll('.stat-num:not(.stat-fixed)');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const text = el.textContent;
+          const num = parseFloat(text.replace(/[^0-9.]/g, ''));
+          const suffix = text.replace(/[0-9.]/g, '');
+          let start = 0;
+          const duration = 1400;
+          const step = (timestamp) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = (num < 10
+              ? (eased * num).toFixed(1)
+              : Math.round(eased * num)) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => observer.observe(c));
+
+    // Hero image carousel
+    const carouselSlides = document.querySelectorAll('.carousel-slide');
+    const carouselDots = document.querySelectorAll('.carousel-dot');
+    let activeSlide = 0;
+
+    function goToSlide(n) {
+      carouselSlides[activeSlide].classList.remove('active');
+      carouselDots[activeSlide].classList.remove('active');
+      activeSlide = (n + carouselSlides.length) % carouselSlides.length;
+      carouselSlides[activeSlide].classList.add('active');
+      carouselDots[activeSlide].classList.add('active');
+    }
+
+    carouselDots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+    setInterval(() => goToSlide(activeSlide + 1), 4500);
+  </script>
+</body>
+</html>
+
