@@ -40,7 +40,7 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     .tag {
       display: inline-flex; align-items: center; gap: 6px;
-      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--cyan);
       background: var(--cyan-dim); border: 1px solid rgba(0,200,255,0.2);
       padding: 5px 14px; border-radius: 100px;
@@ -162,7 +162,7 @@
 
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+      font-size: 15px; font-weight: 600; letter-spacing: 0.08em;
       text-transform: uppercase; color: var(--cyan);
       background: var(--cyan-dim); border: 1px solid rgba(0,200,255,0.25);
       padding: 6px 16px; border-radius: 100px; margin-bottom: 24px;
@@ -203,9 +203,9 @@
 
     .machine-carousel {
       position: relative; z-index: 1;
-      height: 520px;
+      height: 600px;
       width: 100%;
-      max-width: 420px;
+      max-width: 500px;
       animation: float 6s ease-in-out infinite;
     }
 
@@ -266,7 +266,7 @@
     }
     .hero-badge-icon { font-size: 1.4rem; }
     .hero-badge strong { display: block; font-size: 14px; font-weight: 700; color: var(--text); }
-    .hero-badge span { font-size: 12px; color: var(--muted); }
+    .hero-badge span { font-size: 12px; color: var(--text); }
 
     .badge-top { top: 60px; left: -20px; animation: floatBadge1 5s ease-in-out infinite; }
     .badge-bot { bottom: 80px; right: -20px; animation: floatBadge2 5s ease-in-out 1s infinite; }
@@ -313,17 +313,7 @@
       gap: 32px; position: relative;
     }
 
-    /* Connector line */
-    .steps-grid::before {
-      content: '';
-      position: absolute;
-      top: 40px; left: calc(16.67% + 20px); right: calc(16.67% + 20px);
-      height: 1px;
-      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--cyan));
-      z-index: 0;
-    }
-
-    .step-card {
+.step-card {
       background: var(--card);
       border: 1px solid var(--card-border);
       border-radius: 20px;
@@ -637,6 +627,7 @@
         <li><a href="#machines">Machines</a></li>
         <li><a href="#locations">Locations</a></li>
         <li><a href="#why">Why Us</a></li>
+        <li><a href="#get-started">Contact Us</a></li>
       </ul>
 
       <a href="#get-started" class="btn-primary nav-cta">Get a Free Machine &rarr;</a>
@@ -714,8 +705,8 @@
           <p class="stat-label">Average Installation Time</p>
         </div>
         <div class="stat-item">
-          <span class="stat-num">99.9%</span>
-          <p class="stat-label">Machine Uptime Guaranteed</p>
+          <span class="stat-num stat-fixed">100%</span>
+          <p class="stat-label">Stocked &amp; Serviced by Us</p>
         </div>
         <div class="stat-item">
           <span class="stat-num stat-fixed">24/7</span>
@@ -1003,7 +994,7 @@
               </defs>
             </svg>
           </a>
-          <p>We place, stock, and service AI-powered vending machines at your business &mdash; completely free. Your team gets 24/7 snacks and drinks. You get zero hassle.</p>
+          <p>We place, stock, and service AI-powered vending machines at your business, completely free. Your team gets 24/7 snacks and drinks. You get zero hassle.</p>
         </div>
         <div class="footer-col">
           <h4>Product</h4>
@@ -1021,6 +1012,8 @@
             <li><a href="#">Careers</a></li>
             <li><a href="#">Press</a></li>
             <li><a href="#">Contact</a></li>
+            <li><a href="tel:8702151305">&#x1F4DE;&#x1F4AC; 870-215-1305</a></li>
+            <li><a href="mailto:sales@ai-smartvending.com">sales@ai-smartvending.com</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -1056,7 +1049,7 @@
       e.preventDefault();
       const btn = e.target.querySelector('button');
       const input = e.target.querySelector('input');
-      btn.textContent = '&#x2713; We\'ll be in touch!';
+      btn.innerHTML = '&#x2713; We\'ll be in touch!';
       btn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
       input.value = '';
       input.disabled = true;
