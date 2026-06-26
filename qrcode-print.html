@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Vending — QR Code</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -47,10 +46,6 @@
       color: #0d1b3e;
       letter-spacing: 1px;
     }
-    #qr-canvas {
-      margin: 0 auto 24px;
-      display: block;
-    }
     h2 {
       font-size: 18px;
       font-weight: 800;
@@ -89,7 +84,7 @@
     <span class="wordmark">VENDING</span>
   </div>
 
-  <canvas id="qr-canvas"></canvas>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=0d1b3e&bgcolor=ffffff&data=https%3A%2F%2Ft1ffanyn.github.io%2Fsmart-vending%2Frequest-form.html" width="220" height="220" alt="QR Code" style="margin-bottom:24px;" />
 
   <h2>Want something new in this machine?</h2>
   <p>Scan to request your favorite drink or snack — we review every submission!</p>
@@ -99,17 +94,6 @@
   <div class="footer-text">service@ai-smartvending.com &nbsp;·&nbsp; 870-215-1305</div>
 </div>
 
-<script>
-  QRCode.toCanvas(
-    document.getElementById('qr-canvas'),
-    'https://t1ffanyn.github.io/smart-vending/request-form.html',
-    {
-      width: 220,
-      margin: 2,
-      color: { dark: '#0d1b3e', light: '#ffffff' }
-    }
-  );
-</script>
 
 </body>
 </html>
