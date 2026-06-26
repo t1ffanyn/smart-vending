@@ -212,6 +212,7 @@
         <input type="email" id="email" name="_replyto" placeholder="you@example.com" />
 
         <input type="hidden" name="_subject" value="New Smart Vending Product Request" />
+        <input type="hidden" name="submitted_at" id="submitted_at" />
 
         <button type="submit" class="btn">Submit Request</button>
       </form>
@@ -230,6 +231,7 @@
     const form = document.querySelector('form');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      document.getElementById('submitted_at').value = new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' });
       const data = new FormData(form);
       const res = await fetch(form.action, {
         method: 'POST',
