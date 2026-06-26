@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request a Product — Smart Vending</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #04080F;
+      --card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.1);
+      --cyan: #00C8FF;
+      --green: #00c9a7;
+      --text: #c8d0dc;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 60px;
+    }
+    .logo {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .logo svg { width: 200px; height: auto; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 480px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #6b7a90;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #8a95a3;
+      margin-bottom: 8px;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 20px;
+    }
+    input::placeholder, textarea::placeholder { color: #4a5568; }
+    select option { background: #0d1b3e; color: #fff; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--cyan);
+    }
+    textarea { resize: vertical; min-height: 90px; }
+    .radio-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .radio-option {
+      flex: 1;
+      position: relative;
+    }
+    .radio-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      margin: 0;
+    }
+    .radio-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--text);
+      transition: all 0.2s;
+      margin-bottom: 0;
+    }
+    .radio-option input[type="radio"]:checked + label {
+      border-color: var(--cyan);
+      background: rgba(0,200,255,0.1);
+      color: var(--cyan);
+    }
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #04080F;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: opacity 0.2s;
+      margin-top: 4px;
+    }
+    .btn:hover { opacity: 0.9; }
+    .success {
+      display: none;
+      text-align: center;
+      padding: 20px 0 8px;
+    }
+    .success .check {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .success h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .success p {
+      font-size: 14px;
+      color: #6b7a90;
+    }
+    footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: #3a4555;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">
+    <svg viewBox="0 0 280 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="4" width="116" height="44" rx="22" fill="url(#gForm)"/>
+      <text x="58" y="32" font-family="Inter, sans-serif" font-weight="900" font-size="22" fill="#04080F" text-anchor="middle" letter-spacing="-0.5">SMART</text>
+      <text x="126" y="32" font-family="Inter, sans-serif" font-weight="400" font-size="22" fill="#fff" letter-spacing="1">VENDING</text>
+      <defs>
+        <linearGradient id="gForm" x1="0" y1="0" x2="116" y2="0" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00c9a7"/>
+          <stop offset="1" stop-color="#00C8FF"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="card">
+    <h1>Request a Product</h1>
+    <p class="subtitle">Don't see what you want? Let us know and we'll do our best to stock it!</p>
+
+    <div id="form-wrap">
+      <form action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST">
+
+        <label>What type of product?</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" id="drink" name="product_type" value="Drink" required />
+            <label for="drink">🥤 Drink</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="snack" name="product_type" value="Snack" />
+            <label for="snack">🍿 Snack</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="other" name="product_type" value="Other" />
+            <label for="other">✨ Other</label>
+          </div>
+        </div>
+
+        <label for="product_name">Product name or brand</label>
+        <input type="text" id="product_name" name="product_name" placeholder="e.g. Celsius, Takis, Celsius Wild Berry…" required />
+
+        <label for="location">Machine location <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input type="text" id="location" name="machine_location" placeholder="e.g. Building lobby, 2nd floor break room…" />
+
+        <label for="notes">Anything else? <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <textarea id="notes" name="notes" placeholder="Flavor, size, dietary preference…"></textarea>
+
+        <label for="email">Your email <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional — if you'd like a reply)</span></label>
+        <input type="email" id="email" name="_replyto" placeholder="you@example.com" />
+
+        <input type="hidden" name="_subject" value="New Smart Vending Product Request" />
+
+        <button type="submit" class="btn">Submit Request</button>
+      </form>
+    </div>
+
+    <div class="success" id="success-msg">
+      <div class="check">✅</div>
+      <h2>Request received!</h2>
+      <p>Thanks for the suggestion. We review all requests and will do our best to add popular items.</p>
+    </div>
+  </div>
+
+  <footer>Smart Vending &nbsp;·&nbsp; service@ai-smartvending.com</footer>
+
+  <script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        document.getElementById('form-wrap').style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+      } else {
+        alert('Something went wrong. Please try again or email service@ai-smartvending.com.');
+      }
+    });
+  </script>
+
+</body>
+</html>
