@@ -9,10 +9,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #fff;
+      background: #dce1e7;
       font-family: 'Inter', sans-serif;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
@@ -20,30 +19,39 @@
     }
 
     .card {
-      border: 2.5px solid #e2e8f0;
+      width: 500px;
+      height: 500px;
       border-radius: 24px;
-      padding: 40px 44px 36px;
-      max-width: 360px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
     }
 
-    .logo-pill {
-      display: inline-flex;
+    /* Gradient top band */
+    .top-band {
+      background: linear-gradient(90deg, #00c9a7 0%, #0094d4 100%);
+      padding: 18px 28px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .logo-row {
+      display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 24px;
     }
 
     .pill {
-      background: linear-gradient(90deg, #00c9a7, #00C8FF);
+      background: rgba(0, 0, 0, 0.18);
       border-radius: 20px;
-      padding: 6px 16px;
+      padding: 5px 14px;
       font-family: 'Outfit', sans-serif;
       font-size: 15px;
       font-weight: 900;
-      color: #04080F;
+      color: #fff;
       letter-spacing: -0.3px;
     }
 
@@ -51,46 +59,54 @@
       font-family: 'Outfit', sans-serif;
       font-size: 15px;
       font-weight: 400;
+      color: rgba(255,255,255,0.92);
+      letter-spacing: 1.5px;
+    }
+
+    .llc-badge {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.7);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* White body */
+    .body {
+      flex: 1;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 20px 36px 18px;
+      text-align: center;
+    }
+
+    .headline {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
       color: #0d1b3e;
-      letter-spacing: 1px;
+      line-height: 1.15;
+    }
+
+    .subline {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0094d4;
+      margin-top: 6px;
     }
 
     .qr-wrap {
       display: inline-block;
-      padding: 12px;
-      border-radius: 16px;
-      background: #fff;
+      padding: 10px;
+      border-radius: 14px;
       border: 2px solid #e2e8f0;
-      margin-bottom: 24px;
-    }
-
-    h2 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 34px;
-      font-weight: 900;
-      color: #0d1b3e;
-      margin-bottom: 20px;
-      line-height: 1.2;
-    }
-
-    p {
-      font-size: 13px;
-      color: #6b7a90;
-      line-height: 1.65;
-      margin-bottom: 20px;
-    }
-
-    .divider {
-      border: none;
-      border-top: 1px solid #e2e8f0;
-      margin: 20px 0;
-    }
-
-    .footer-text {
-      font-size: 11px;
-      color: #aab0bc;
-      letter-spacing: 0.3px;
-      line-height: 1.8;
+      background: #fff;
     }
 
     .cta-badge {
@@ -100,16 +116,30 @@
       background: linear-gradient(90deg, #00c9a7, #0094d4);
       color: #fff;
       border-radius: 20px;
-      padding: 6px 16px;
+      padding: 7px 18px;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.4px;
-      margin-bottom: 20px;
+    }
+
+    .footer-strip {
+      font-size: 11px;
+      color: #8a94a6;
+      letter-spacing: 0.3px;
+      line-height: 1.8;
+      border-top: 1px solid #f0f2f5;
+      padding-top: 12px;
+      width: 100%;
     }
 
     @media print {
       body { padding: 0; background: #fff; }
-      .card { border: 2px solid #ccc; box-shadow: none; }
+      .card {
+        width: 6in;
+        height: 6in;
+        box-shadow: none;
+        border-radius: 12px;
+      }
     }
   </style>
 </head>
@@ -117,37 +147,43 @@
 
 <div class="card">
 
-  <div class="logo-pill">
-    <span class="pill">SMART</span>
-    <span class="wordmark">VENDING</span>
+  <!-- Gradient top band -->
+  <div class="top-band">
+    <div class="logo-row">
+      <span class="pill">SMART</span>
+      <span class="wordmark">VENDING</span>
+    </div>
+    <span class="llc-badge">LLC</span>
   </div>
 
-  <h2>Want an AI Smart Cooler at Your Business?</h2>
-  <p style="font-size:15px; font-weight:600; color:#0094d4; margin-bottom:20px; margin-top:-12px;">Contact Us at Smart Vending</p>
+  <!-- White body -->
+  <div class="body">
 
-  <div class="qr-wrap">
-    <img
-      src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=0d1b3e&bgcolor=ffffff&data=https%3A%2F%2Fai-smartvending.com%2Finstall-request.html"
-      width="220"
-      height="220"
-      alt="QR Code — ai-smartvending.com/install-request.html"
-    />
-  </div>
+    <div>
+      <div class="headline">Want an AI Smart Cooler<br />at Your Business?</div>
+      <div class="subline">Contact Us at Smart Vending</div>
+    </div>
 
-  <div class="cta-badge">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" fill="#fff"/>
-    </svg>
-    Scan to Get Started
-  </div>
+    <div class="qr-wrap">
+      <img
+        src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=0d1b3e&bgcolor=ffffff&data=https%3A%2F%2Fai-smartvending.com%2Finstall-request.html"
+        width="200"
+        height="200"
+        alt="QR Code — ai-smartvending.com/install-request.html"
+      />
+    </div>
 
-  <p>Leave your contact info and we'll reach out to discuss installation — fast, easy, and no commitment.</p>
+    <div class="cta-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" fill="#fff"/>
+      </svg>
+      Scan to Get Started
+    </div>
 
-  <hr class="divider" />
+    <div class="footer-strip">
+      ai-smartvending.com &nbsp;·&nbsp; service@ai-smartvending.com &nbsp;·&nbsp; 870-215-1305
+    </div>
 
-  <div class="footer-text">
-    ai-smartvending.com<br />
-    service@ai-smartvending.com &nbsp;·&nbsp; 870-215-1305
   </div>
 
 </div>
