@@ -962,13 +962,40 @@
       <div class="cta-inner">
         <div class="tag" style="margin:0 auto 20px;">It's Completely Free</div>
         <h2>Ready to give your team<br /><span class="gradient-text">a premium AI smart vending experience?</span></h2>
-        <p>Drop your email and we'll reach out within 24 hours to discuss your space, choose the right machine size, and schedule your free installation.</p>
+        <p>The fastest way to get started — give us a call or send a text and we'll take it from there.</p>
+
+        <!-- Primary CTA: Phone -->
+        <a href="tel:8702151305" style="
+          display:flex; align-items:center; justify-content:center; gap:14px;
+          background:linear-gradient(135deg, #00C8FF, #8B5CF6);
+          border-radius:14px; padding:22px 36px; margin-bottom:28px;
+          text-decoration:none; transition:opacity 0.2s;
+        " onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="#fff"/>
+          </svg>
+          <div style="text-align:left;">
+            <div style="font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.75); margin-bottom:2px;">Text or Call Us</div>
+            <div style="font-size:26px; font-weight:800; color:#fff; letter-spacing:-0.02em;">870-215-1305</div>
+          </div>
+        </a>
+
+        <!-- Divider -->
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+          <div style="flex:1; height:1px; background:rgba(255,255,255,0.1);"></div>
+          <span style="font-size:12px; color:#64748B; font-weight:500; letter-spacing:0.05em; text-transform:uppercase;">or enter your info</span>
+          <div style="flex:1; height:1px; background:rgba(255,255,255,0.1);"></div>
+        </div>
+
+        <!-- Secondary CTA: Name + Email form -->
         <div data-fs-success hidden style="color:#10B981;font-weight:600;margin-bottom:12px;">&#x2713; We'll be in touch within 24 hours!</div>
         <div data-fs-error hidden style="color:#f87171;font-weight:600;margin-bottom:12px;"></div>
-        <form id="cta-email-form" class="cta-form">
-          <input type="email" name="email" placeholder="Enter your work email" required data-fs-field />
-          <button type="submit" class="btn-primary" data-fs-submit-btn>Request Your Free Machine &rarr;</button>
+        <form id="cta-email-form" class="cta-form" style="flex-direction:column; gap:12px;">
+          <input type="text" name="name" placeholder="Your name" required data-fs-field style="width:100%; padding:14px 18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#F1F5F9; font-size:15px; font-family:inherit; outline:none;" />
+          <input type="email" name="email" placeholder="Your email address" required data-fs-field style="width:100%; padding:14px 18px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#F1F5F9; font-size:15px; font-family:inherit; outline:none;" />
+          <button type="submit" class="btn-outline" data-fs-submit-btn style="width:100%; justify-content:center;">We'll Contact You &rarr;</button>
         </form>
+
         <div class="cta-trust">
           <span>&#x2713; No cost to your business</span>
           <span>&#x2713; Free site assessment</span>
